@@ -19,6 +19,9 @@
 
 # store_config function "module" "key" "value" PUBLIC
 # Stores a key/value pair for given module in /etc/eclectic/${module}
+
+CONFIG_PATH="/etc/eclectic"
+
 store_config() {
 	# we need at least "module" and "key"
 	[[ ${#@} -gt 2 ]] || die
@@ -30,7 +33,7 @@ store_config() {
 	value=${@}
 
 	content=()
-	[[ -f "${ROOT}/etc/eclectic/${module}" ]] && content=$(<${ROOT}/etc/eclectic/${module})
+	[[ -f "${ROOT}/${CONFIG_PATH}/${module}" ]] && content=$(<${ROOT}/${CONFIG_PATH}/${module})
 	newcontent=()
 	
 	for line in ${content[@]} ; do
@@ -41,7 +44,7 @@ store_config() {
 		fi
 	done
 
-	echo ${newcontent[@]} > ${ROOT}/etc/eclectic/${module}
+	echo ${newcontent[@]} > ${ROOT}/${CONFIG_PATH}/${module}
 }
 
 # load_config function "module" "key" PUBLIC
@@ -53,7 +56,7 @@ load_config() {
 	module=${1}
 	key=${2}
 	value=$(
-		source ${ROOT}/etc/eclectic/${module}
+		source ${ROOT}/${CONFIG_PATH}/${module}
 		echo ${!key}
 	)
 	echo ${value}
