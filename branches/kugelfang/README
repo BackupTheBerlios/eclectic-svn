@@ -10,6 +10,7 @@ Ciaran McCreesh <ciaranm@gentoo.org>
     Libraries:  core, output
 
 Danny van Dyk <kugelfang@gentoo.org>
+    Modules:    blas
     Libraries:  config, multilib
 
 Copyright

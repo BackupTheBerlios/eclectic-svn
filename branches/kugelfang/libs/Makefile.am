@@ -1,5 +1,5 @@
-noinst_SCRIPTS = core.bash default.eclectic output.bash config.bash
-EXTRA_DIST = core.bash.in default.eclectic.in output.bash.in config.bash.in
+noinst_SCRIPTS = core.bash default.eclectic output.bash config.bash multilib.bash
+EXTRA_DIST = core.bash.in default.eclectic.in output.bash.in config.bash.in multilib.bash.in
 
 %.bash : %.bash.in
 	cp $? $@

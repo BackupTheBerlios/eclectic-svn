@@ -102,15 +102,9 @@ do_action() {
     )
 }
 
-# add varname item
-# Add $item to var called $varname
-add() {
-    ${1}="${!1} ${2}"
-}
-
 # has varname item
 has() {
-    local var=${1} item
+    local var=${!1} item
     for item in ${var} ; do
         [[ ${item} == ${2} ]] && return 0
     done
