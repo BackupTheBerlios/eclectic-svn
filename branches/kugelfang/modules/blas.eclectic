@@ -1,0 +1,78 @@
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+DESCRIPTION="Manage installed BLAS implementations. (virtual/blas)"
+VERSION="0.1"
+MAINTAINER="Danny van Dyk <kugelfang@gentoo.org>"
+
+BLAS_IMPL="ACML ATLAS reference"
+BLAS_PROFILES="C F77"
+
+# check_* $libdir
+# implementation specific check functions
+check_ACML() {
+	# libacml.so provides C/C++ and FORTRAN 77 support
+	[[ -f ${1}/libacml.so ]] && echo "C F77"
+}
+
+check_ATLAS() {
+	[[ -d ${1}/blas/atlas ]] || return
+	local ret
+	# libblas.so provides FORTRAN 77 support
+	[[ -f ${1}/blas/atlas/libblas.so ]] && ret="F77"
+	# libcblas.so provides C/C++ support
+	[[ -f ${1}/blas/atlas/libcblas.so ]] && ret="${ret} C"
+	echo "${ret}"
+}
+
+check_reference() {
+	[[ -d ${1}/blas/reference ]] || return
+	local ret
+	[[ -f ${1}/blas/reference/libblas.so ]] && ret="F77"
+	[[ -f ${1}/blas/reference/libcblas.so ]] && ret="${ret} C"
+	echo "${ret}"
+}
+
+### list action ###
+
+describe_list() {
+	echo "List all installed BLAS implementations."
+}
+
+do_list() {
+	local libdirs libdir
+	[[ -z "$@" ]] \
+		&& libdirs="$(list_libdirs)"
+		|| libdirs="$@"
+		
+	for libdir in "${libdirs}" ; do
+		echo "--- Installed in ${libdir} ---"
+		C_PROFILES=$(load_config blas C_PROFILES_${libdir})
+		F77_PROFILES=$(load_config blas F77_PROFILES_${libdir})
+		write_list_start "C/C++ profiles"
+		write_numbered_list ${C_PROFILES}
+		echo
+		write_list_start "FORTRAN 77 profiles"
+		write_numbered_list ${F77_PROFILES}
+	done
+}
+
+### update action ###
+
+describe_update() {
+	echo "Update the configuration with data about all installed BLAS \
+		implementations."
+}
+
+do_update() {
+	local libdir impl prof
+	for libdir in ${list_libdirs} ; do
+		[[ -e ${ROOT}/usr/${libdir}/ ]] || continue
+		for impl in ${BLAS_IMPL} ; do
+			for prof in $(check_${impl} ${ROOT}/usr/${libdir}/) ; do
+				add "${prof}_PROFILES_${libdir}" ${prof}
+			done
+		done
+	done
+}
