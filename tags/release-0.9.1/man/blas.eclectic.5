@@ -1,0 +1,89 @@
+.TH "ECLECTIC" "5" "April 2005" "Gentoo Linux" "eclectic"
+.SH "NAME"
+blas.eclectic \- The BLAS management module for Gentoo's eclectic
+.SH "SYNOPSIS"
+\fBeclectic blas\fR [\fBhelp\fR|\fBusage\fR]
+.br 
+\fBeclectic blas\fR \fBlist\fR [\fIoptions\fR]
+.br 
+\fBeclectic blas\fR \fBset\fR \fIimplementation\fR [\fIoptions\fR]
+.br 
+\fBeclectic blas\fR \fBshow\fR [\fIoptions\fR]
+.br 
+\fBeclectic blas\fR \fBupdate\fR
+.SH "DESCRIPTION"
+\fBeclectic\fR is Gentoo's configuration and management tool. It features
+modules that care for the individual administrative tasks.
+.SH "ACTION: LIST"
+\fBeclectic blas list\fR [\fIoptions\fR]
+.br 
+Displays an orderd list of installed BLAS implementations. It distinguishes between versions with different
+Application Binary Interfaces (e.g. x86/AMD64). Further it distinguishes
+between interfaces to highlevel programming languages. Each line holds
+a number, the implementation's name and the providing package's name.
+
+phi / # eclectic blas list
+.br 
+\-\-\- Installed in /usr/lib \-\-\-
+.br 
+C/C++ profiles
+  [1]   ACML        (sci\-libs/ACML)
+  [2]   ATLAS       (sci\-libs/blas\-atlas)
+
+FORTRAN 77 profiles
+  [1]   ACML        (sci\-libs/ACML)
+  [2]   ATLAS       (sci\-libs/blas\-atlas)
+  [3]   reference   (sci\-libs/blas\-reference)
+
+
+Possible \fIoptions\fR to the \fBlist\fR action are restrictions to
+handle only certain profiles or ABI\-specific library directories. For example,
+ 
+\fBeclectic blas list lib64\fR
+
+lists only BLAS implementations found in \fB/usr/lib64\fR while
+
+\fBeclectic blas list lib32 F77\fR
+
+lists only BLAS implementations that provide a FORTRAN 77 interface
+and are located in \fB/usr/lib32\fR.
+.SH "ACTION: SHOW"
+\fBeclectic blas show\fR [\fIoptions\fR]
+.br 
+Shows your system's currently active BLAS implementations.
+
+phi / # eclectic blas show
+.br 
+Active BLAS implementations
+  /usr/lib (C)              ACML (sci\-libs/ACML)
+  /usr/lib (F77)            ACML (sci\-libs/ACML)
+  /usr/lib64 (C)            ACML (sci\-libs/ACML)
+  /usr/lib64 (F77)          ACML (sci\-libs/ACML)
+
+The same \fIoptions\fR that apply to the \fBlist\fR action can be used
+with the \fBshow\fR action to restrict it to given ABIs and language interfaces.
+.SH "ACTION: SET"
+\fBeclectic blas set\fR \fIimplementation\fR [\fIoptions\fR]
+.br 
+Sets your system's currently active BLAS implementations to \fIimplementation\fR. 
+The same \fIoptions\fR that apply to the \fBlist\fR action can be used
+with the \fBset\fR action to restrict it to given ABIs and language interfaces.
+
+phi / # eclectic blas set ACML
+.br 
+Changing BLAS implementation to ACML in
+.br 
+  lib lib32 lib64
+.br 
+Affected language interfaces
+  C F77
+.SH "ACTION: UPDATE"
+\fBeclectic blas update\fR
+.br 
+Browses your system for installed BLAS implementations
+and save the data for further actions. During this process it automatically
+detects the currently active BLAS implementation which will be memorized as well.
+.SH "AUTHOR"
+Danny van Dyk <kugelfang@gentoo.org>
+.SH "REVISION"
+$Id$
