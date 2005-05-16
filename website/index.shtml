@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- vim: set ft=xhtml fenc=utf-8 foldmethod=marker : -->
+
+<html lang="en-GB" xml:lang="en-GB" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Eclectic Tool Framework</title>
+  <link rel="stylesheet" href="default.css" type="text/css" />
+</head>
+
+<body>
+    <h1>Eclectic Tool Framework</h1>
+    <p>Eclectic is a free, open source (GNU General Public Licence)
+    framework for writing configuration tools.</p>
+
+    <ul>
+	<li>Read a brief <a href="overview.shtml">overview of Eclectic</a>.</li>
+	<li><a href="https://developer.berlios.de/project/showfiles.php?group_id=3165">Download the 
+	    latest version of Eclectic</a>.</li>
+	<li>Find out about <a href="https://developer.berlios.de/svn/?group_id=3165">accessing the
+	    project's Subversion repository</a>.</li>
+	<li>Read the <a href="user-guide.shtml">user guide</a>.</li>
+	<li>Read the <a href="developer-guide.shtml">developer guide</a>.</li>
+	<li>Read the <a href="release-guide.shtml">release guide</a>.</li>
+    </ul>
+</body>
+</html>
+

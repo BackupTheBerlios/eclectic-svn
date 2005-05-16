@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- vim: set ft=xhtml fenc=utf-8 foldmethod=marker : -->
+
+<html lang="en-GB" xml:lang="en-GB" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Eclectic Tool Framework: User Guide</title>
+  <link rel="stylesheet" href="default.css" type="text/css" />
+</head>
+
+<body>
+    <!--#include virtual="user-guide.content" -->
+</body>
+</html>
+
