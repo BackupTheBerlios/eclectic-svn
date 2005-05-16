@@ -1,0 +1,30 @@
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+DESCRIPTION="Do things to a cow"
+MAINTAINER="ciaranm@gentoo.org"
+SVN_DATE='$Date$'
+VERSION=$(svn_date_to_version "${SVN_DATE}" )
+
+### moo action
+
+describe_moo() {
+	echo "Say moo"
+}
+
+do_moo() {
+	echo "${@:-I am a cow}" | cowsay
+}
+
+### think action
+
+describe_think() {
+	echo "Show a pensive cow"
+}
+
+do_think() {
+	echo "${@:-Am I a cow?}" | cowthink
+}
+
+# vim: set ft=eclectic :

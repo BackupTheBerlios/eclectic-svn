@@ -1,0 +1,116 @@
+#!/bin/bash
+
+# Copyright (c) 2005 Gentoo Foundation.
+# $Header$
+# This file is part of the 'Eclectic' tools framework.
+#
+# Eclectic is free software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 2 of the License, or (at your option) any later
+# version.
+#
+# Eclectic is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# Eclectic; if not, write to the Free Software Foundation, Inc., 59 Temple
+# Place, Suite 330, Boston, MA  02111-1307  USA
+
+# write_error_msg PUBLIC
+# write an error
+write_error_msg() {
+    echo -e "${COLOUR_ERROR}!!! Error: ${COLOUR_NORMAL}${*}" 1>&2
+}
+
+# write_list_start PUBLIC
+# Write a list heading. Args may include text highlighting.
+write_list_start() {
+    echo -n -e "${COLOUR_LIST_HEADER}"
+    echo -n -e $(apply_text_highlights "${COLOUR_LIST_HEADER}" "$*")
+    echo -n -e "${COLOUR_NORMAL}"
+    echo
+}
+
+# write_kv_list_entry PUBLIC
+# Write a key/value list entry with $1 on the left and $2 on the right.
+# Args may include text highlighting.
+write_kv_list_entry() {
+    local n text
+    echo -n -e "  ${COLOUR_LIST_LEFT}"
+    echo -n -e $(apply_text_highlights "${COLOUR_LIST_LEFT}" "$1")
+    echo -n -e "${COLOUR_NORMAL} "
+    text=${1//\%%%??%%%}
+    for (( n = 1 ; n <= $(( 25 - ${#text} )) ; ++n )) ; do
+        echo -n " "
+    done
+    echo -n -e "${COLOUR_LIST_RIGHT}"
+    echo -n -e $(apply_text_highlights "${COLOUR_LIST_RIGHT}" "$2")
+    echo -n -e "${COLOUR_NORMAL}"
+    echo
+}
+
+# write_numbered_list_entry PUBLIC
+# Write out a numbered list entry with index $1 and text $2. Args may
+# include text highlighting.
+write_numbered_list_entry() {
+    local n
+    echo -n -e "  ${COLOUR_LIST_LEFT}"
+    echo -n -e $(apply_text_highlights "${COLOUR_LIST_LEFT}" "[$1]")
+    echo -n -e "${COLOUR_NORMAL}"
+    for (( n = 1 ; n <= $(( 4 - ${#1} )) ; ++n )) ; do
+        echo -n " "
+    done
+    echo -n -e "${COLOUR_LIST_RIGHT}"
+    echo -n -e $(apply_text_highlights "${COLOUR_LIST_RIGHT}" "$2")
+    echo -n -e "${COLOUR_NORMAL}"
+    echo
+}
+
+# write_numbered_list PUBLIC
+# Write out a numbered list. Args may include text highlighting.
+write_numbered_list() {
+    local n=1
+    while [[ ${#@} -gt 0 ]] ; do
+        item=${1}
+        shift
+        write_numbered_list_entry "${n}" "${item}"
+        n=$((  ${n} + 1 ))
+    done
+}
+
+# apply_text_highlights INTERNAL
+# Apply text highlights. First arg is the 'restore' colour, second arg
+# is the text.
+apply_text_highlights() {
+    local restore=${1} text=${2}
+    text="${text//\%%%HI%%%/${COLOUR_HI}}"
+    text="${text//\%%%WA%%%/${COLOUR_WARN}}"
+    text="${text//\%%%RE%%%/${restore}}"
+    echo -n "${text}"
+}
+
+# highlight PUBLIC
+# Highlight all arguments. Text highlighting function.
+highlight() {
+    echo -n -e "%%%HI%%%${*}%%%RE%%%"
+}
+
+# highlight_warning PUBLIC
+# Highlight all arguments as a warning (red). Text highlighting function.
+highlight_warning() {
+    echo -n -e "%%%WA%%%${*}%%%RE%%%"
+}
+
+
+# space PUBLIC
+# Write $1 numbers of spaces
+space() {
+    local n=${1}
+    while [[ ${n} -gt 0 ]] ; do
+        echo -ne " "
+        n=$(( ${n} - 1))
+    done
+}
+
+# vim: set sw=4 et sts=4 tw=80 :
